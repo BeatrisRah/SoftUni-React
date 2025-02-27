@@ -1,4 +1,31 @@
+import authService from "../services/auth-service"
+
 export default function (props) {
+    async function formHandler(e) {
+        e.preventDefault()
+        const formElement =  e.currentTarget
+        const formData = new FormData(formElement)
+        const [
+            firstName, 
+            lastName, 
+            email, 
+            phoneNumber ,
+            imageUrl, 
+            country, 
+            city, 
+            street, 
+            streetNumber] = [...formData.values()]
+        
+        try{
+            await authService.createUser({firstName, lastName, email, phoneNumber ,imageUrl, country, city, street, streetNumber})
+        }catch(err){
+            console.log(err.message);
+            
+        }
+        
+        
+    }
+
     return (
         <div className="overlay">
             <div className="backdrop"></div>
@@ -15,7 +42,7 @@ export default function (props) {
                             </svg>
                         </button>
                     </header>
-                    <form>
+                    <form onSubmit={formHandler}>
                         <div className="form-row">
                             <div className="form-group">
                                 <label htmlFor="firstName">First name</label>
@@ -93,7 +120,7 @@ export default function (props) {
                         </div>
                         <div id="form-actions">
                             <button id="action-save" className="btn" type="submit">Save</button>
-                            <button id="action-cancel" className="btn" type="button">
+                            <button id="action-cancel" className="btn" type="button" onClick={props.eventHandler}>
                                 Cancel
                             </button>
                         </div>
