@@ -18,6 +18,7 @@ export default function (props) {
         
         try{
             await authService.createUser({firstName, lastName, email, phoneNumber ,imageUrl, country, city, street, streetNumber})
+            formElement.reset()
         }catch(err){
             console.log(err.message);
             
