@@ -9,7 +9,7 @@ async function createUser({firstName, lastName, email, phoneNumber ,imageUrl, co
         phoneNumber ,
         createdAt:Date.now(),
         updatedAt:Date.now(),
-        adress: {
+        address: {
             country,
             city,
             street,
@@ -19,6 +19,27 @@ async function createUser({firstName, lastName, email, phoneNumber ,imageUrl, co
     
 }
 
+async function getAllUsers() {
+    const response = await api.get()
+    if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data;
+}
+
+async function getOneUSer(id) {
+    const response = await api.get(id)
+    if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data;
+}
 export default{
     createUser,
+    getAllUsers,
+    getOneUSer
 }

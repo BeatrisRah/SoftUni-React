@@ -9,7 +9,7 @@ async function post(data) {
 async function get(id= null) {
     let newurl = url
     if(id) newurl += `/${id}`
-    return await requester({method:'POST', url: newurl})
+    return await requester({method:'GET', url: newurl})
 }
 
 export default{

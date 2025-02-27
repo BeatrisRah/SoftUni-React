@@ -20,6 +20,7 @@ export default function (props) {
             await authService.createUser({firstName, lastName, email, phoneNumber ,imageUrl, country, city, street, streetNumber})
             formElement.reset()
             props.eventHandler()
+            props.toggleAddUser()
         }catch(err){
             console.log(err.message);
             

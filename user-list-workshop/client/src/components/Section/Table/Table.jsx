@@ -1,6 +1,28 @@
+import {useEffect, useState } from "react"
+import authService from "../../../services/auth-service.js"
+
 import TableRow from "./TableRow";
 
-export default function(){
+
+export default function(props){
+    const [users, setUSers] = useState([])
+
+
+
+    useEffect(() => {
+        const fetchUsers = async () => {
+            try{
+                const data =  await authService.getAllUsers()
+                setUSers(data)
+            } catch(err){
+                console.log(err);
+            }
+            
+        }
+        fetchUsers()
+        
+    }, [props.userAdded])
+
     return(
         <table className="table">
             <thead>
@@ -59,7 +81,8 @@ export default function(){
             </thead>
             <tbody>
                 {/* <!-- Table row component --> */}
-                <TableRow />
+                {Object.values(users).map(u => <TableRow data={u} key={u._id} detailsHndler={() => props.detailsHanler(u._id)} />)}
+                
             </tbody>
         </table>
     )
