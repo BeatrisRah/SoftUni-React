@@ -27,10 +27,10 @@ export default function(){
                 <span>Search Criteria:</span>
                 <select name="criteria" className="criteria">
                     <option value="">Not selected</option>
-                    <option value="">First Name</option>
-                    <option value="">Last Name</option>
-                    <option value="">Email</option>
-                    <option value="">Phone</option>
+                    <option value="firstName">First Name</option>
+                    <option value="lastName">Last Name</option>
+                    <option value="email">Email</option>
+                    <option value="phone">Phone</option>
                 </select>
             </div>
         </form>
