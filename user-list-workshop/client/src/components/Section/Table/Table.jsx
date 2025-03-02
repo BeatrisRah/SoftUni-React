@@ -4,7 +4,7 @@ import {useEffect, useState } from "react"
 import TableRow from "./TableRow";
 
 
-export default function({users, onShow}){
+export default function({users, onShow, onDelete}){
     
     return(
         <table className="table">
@@ -64,7 +64,7 @@ export default function({users, onShow}){
             </thead>
             <tbody>
                 {/* <!-- Table row component --> */}
-                {users.map(u => <TableRow data={u} key={u._id} onShow={onShow} />)}
+                {users.map(u => <TableRow data={u} key={u._id} onShow={onShow} onDelete={onDelete} />)}
                 
             </tbody>
         </table>

@@ -5,12 +5,14 @@ import Table from "./Table/Table";
 import CreateUser from "../CreateUser";
 import UserDetails from "../UserDetails";
 import authService from "../../services/auth-service";
+import DeleteUser from "../DeleteUser";
 
 
 export default function Section() {
     const [users, setUsers] = useState([])
     const [showCreate, toggleCreate] = useState(false)
     const [showdetails, toggleDetails] = useState(null)
+    const [deleteUserID, setDeleteUserID] = useState(null)
 
     const [userId, setUserID] = useState(null)
 
@@ -39,6 +41,9 @@ export default function Section() {
         toggleDetails(null)
     }
 
+    const showDeleteForm = (userID) => {
+        setDeleteUserID(userID)
+    }
 
     return (
         <>
@@ -49,7 +54,8 @@ export default function Section() {
                     {/* <!-- Overlap components  --> */}
                     {showCreate && <CreateUser onClose={closeCreateForm} user={userId} addUser={addUser} />}
                     {showdetails && <UserDetails onClose={closeDetailsForm} user={users.find(u => u._id === showdetails)} />}
-                    <Table users={users} onShow={showDetailsForm} />
+                    {deleteUserID && <DeleteUser />}
+                    <Table users={users} onShow={showDetailsForm} onDelete={showDeleteForm} />
                     
 
                     
