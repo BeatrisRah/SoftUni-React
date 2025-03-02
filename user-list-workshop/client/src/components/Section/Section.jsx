@@ -6,7 +6,14 @@ import CreateUser from "../CreateUser";
 import UserDetails from "../UserDetails";
 import authService from "../../services/auth-service";
 
+
 export default function Section() {
+    const [users, setUsers] = useState([])
+
+    useEffect(() => {
+        authService.getAllUsers()
+        .then(data => setUsers(Object.values(data)))
+    }, [])
 
 
     return (
@@ -17,7 +24,7 @@ export default function Section() {
                 <div className="table-wrapper">
                     {/* <!-- Overlap components  --> */}
                     {/* {formDisplay ? <CreateUser  eventHandler={hideForm} /> : ''} */}
-                    <Table />
+                    <Table users={users} />
                     
 
                     

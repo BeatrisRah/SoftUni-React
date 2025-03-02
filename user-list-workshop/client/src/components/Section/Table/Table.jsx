@@ -4,9 +4,8 @@ import {useEffect, useState } from "react"
 import TableRow from "./TableRow";
 
 
-export default function(props){
+export default function({users}){
     
-
     return(
         <table className="table">
             <thead>
@@ -65,7 +64,7 @@ export default function(props){
             </thead>
             <tbody>
                 {/* <!-- Table row component --> */}
-                {/* {Object.values(props.users).map(u => <TableRow data={u} key={u._id} detailsHndler={() => props.detailsHanler(u._id)} />)} */}
+                {users.map(u => <TableRow data={u} key={u._id}  />)}
                 
             </tbody>
         </table>
