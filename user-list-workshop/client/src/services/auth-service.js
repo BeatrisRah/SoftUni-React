@@ -15,7 +15,8 @@ async function createUser({firstName, lastName, email, phoneNumber ,imageUrl, co
             street,
             streetNumber
         }}
-    return await api.post(expextedData)
+    const newUSer = await api.post(expextedData)
+    return await newUSer.json()
     
 }
 

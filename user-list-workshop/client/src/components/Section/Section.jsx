@@ -25,6 +25,10 @@ export default function Section() {
         toggleCreate(false)
     }
 
+    const addUser = (newUSer) => {
+        setUsers(u => ([...u, newUSer]))
+    }
+
 
     return (
         <>
@@ -33,7 +37,7 @@ export default function Section() {
 
                 <div className="table-wrapper">
                     {/* <!-- Overlap components  --> */}
-                    {showCreate && <CreateUser onClose={closeCreateForm} user={userId} />}
+                    {showCreate && <CreateUser onClose={closeCreateForm} user={userId} addUser={addUser} />}
                     <Table users={users}  />
                     
 

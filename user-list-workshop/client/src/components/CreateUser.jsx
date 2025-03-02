@@ -1,6 +1,6 @@
 import authService from "../services/auth-service"
 
-export default function ({onClose, user}) {
+export default function ({onClose, user, addUser}) {
     async function formHandler(e) {
         e.preventDefault()
         const formElement =  e.currentTarget
@@ -17,7 +17,8 @@ export default function ({onClose, user}) {
             streetNumber] = [...formData.values()]
         
         try{
-            await authService.createUser({firstName, lastName, email, phoneNumber ,imageUrl, country, city, street, streetNumber})
+            const newUSer = await authService.createUser({firstName, lastName, email, phoneNumber ,imageUrl, country, city, street, streetNumber})
+            addUser(newUSer)
             formElement.reset()
             onClose()
         }catch(err){
@@ -34,7 +35,7 @@ export default function ({onClose, user}) {
             <div className="modal">
                 <div className="user-container">
                     <header className="headers">
-                        <h2>Edit User/Add User</h2>
+                        <h2>{user ? 'Edit': 'Create'} User</h2>
                         <button className="btn close" onClick={onClose} >
                             <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="xmark"
                                 className="svg-inline--fa fa-xmark" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
@@ -44,7 +45,8 @@ export default function ({onClose, user}) {
                             </svg>
                         </button>
                     </header>
-                    <form onSubmit={formHandler}>
+                    {/* TEST */}
+                    <form onSubmit={(e) => user ? '': formHandler(e)}>
                         <div className="form-row">
                             <div className="form-group">
                                 <label htmlFor="firstName">First name</label>
