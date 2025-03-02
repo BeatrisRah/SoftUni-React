@@ -65,7 +65,7 @@ export default function(props){
             </thead>
             <tbody>
                 {/* <!-- Table row component --> */}
-                {Object.values(props.users).map(u => <TableRow data={u} key={u._id} detailsHndler={() => props.detailsHanler(u._id)} />)}
+                {/* {Object.values(props.users).map(u => <TableRow data={u} key={u._id} detailsHndler={() => props.detailsHanler(u._id)} />)} */}
                 
             </tbody>
         </table>
