@@ -27,6 +27,7 @@ export default function Section() {
 
     const closeCreateForm = () => {
         toggleCreate(false)
+        setUserID(null)
     }
 
     const addUser = (newUSer) => {
@@ -45,6 +46,11 @@ export default function Section() {
         setDeleteUserID(userID)
     }
 
+    const showEditForm = (userID) => {
+        setUserID(userID)
+        showCreateForm()
+    }
+
     return (
         <>
             <section className="card users-container">
@@ -52,10 +58,10 @@ export default function Section() {
 
                 <div className="table-wrapper">
                     {/* <!-- Overlap components  --> */}
-                    {showCreate && <CreateUser onClose={closeCreateForm} user={userId} addUser={addUser} />}
+                    {showCreate && <CreateUser onClose={closeCreateForm} user={users.find(u => u._id === userId)} addUser={addUser} />}
                     {showdetails && <UserDetails onClose={closeDetailsForm} user={users.find(u => u._id === showdetails)} />}
                     {deleteUserID && <DeleteUser />}
-                    <Table users={users} onShow={showDetailsForm} onDelete={showDeleteForm} />
+                    <Table users={users} onShow={showDetailsForm} onEdit={showEditForm} onDelete={showDeleteForm} />
                     
 
                     
