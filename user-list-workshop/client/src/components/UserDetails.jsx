@@ -1,21 +1,5 @@
-import { useEffect, useState } from "react"
-import authService from "../services/auth-service"
 
-
-export default function ({userID, toggleHandler}) {
-    const [user, setUser] = useState({})
-    const [pedning, togglePending] = useState(true)
-    useEffect(() =>{
-        const fetchUser = async() => {
-            const data = await authService.getOneUSer(userID)
-            setUser(data)
-            togglePending(false)
-        }
-
-        fetchUser()
-        
-    }, [])
-    
+export default function ({onClose, user}) {
 
     
     
@@ -26,7 +10,7 @@ export default function ({userID, toggleHandler}) {
                 <div className="detail-container">
                     <header className="headers">
                         <h2>User Detail</h2>
-                        <button className="btn close" onClick={toggleHandler}>
+                        <button className="btn close" onClick={onClose}>
                             <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="xmark"
                                 className="svg-inline--fa fa-xmark" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
                                 <path fill="currentColor"
@@ -50,7 +34,7 @@ export default function ({userID, toggleHandler}) {
                             <p>Phone Number: <strong>{user.phoneNumber}</strong></p>
                             <p>
                                 Address:
-                                <strong> {pedning ? '': Object.values(user.address).join(', ')} </strong>
+                                <strong> {Object.values(user.address).join(', ')} </strong>
                             </p>
 
                             <p>Created on: <strong>Wednesday, June 28, 2022</strong></p>

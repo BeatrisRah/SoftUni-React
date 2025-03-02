@@ -10,6 +10,8 @@ import authService from "../../services/auth-service";
 export default function Section() {
     const [users, setUsers] = useState([])
     const [showCreate, toggleCreate] = useState(false)
+    const [showdetails, toggleDetails] = useState(null)
+
     const [userId, setUserID] = useState(null)
 
     useEffect(() => {
@@ -29,6 +31,14 @@ export default function Section() {
         setUsers(u => ([...u, newUSer]))
     }
 
+    const showDetailsForm = (userID) => {
+        toggleDetails(userID)
+    }
+
+    const closeDetailsForm = () => {
+        toggleDetails(null)
+    }
+
 
     return (
         <>
@@ -38,7 +48,8 @@ export default function Section() {
                 <div className="table-wrapper">
                     {/* <!-- Overlap components  --> */}
                     {showCreate && <CreateUser onClose={closeCreateForm} user={userId} addUser={addUser} />}
-                    <Table users={users}  />
+                    {showdetails && <UserDetails onClose={closeDetailsForm} user={users.find(u => u._id === showdetails)} />}
+                    <Table users={users} onShow={showDetailsForm} />
                     
 
                     
