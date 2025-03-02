@@ -1,15 +1,36 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect} from "react";
 import Pagination from "./Pagination";
 import SearchBar from "./SearchBar";
 import Table from "./Table/Table";
 import CreateUser from "../CreateUser";
 import UserDetails from "../UserDetails";
+import authService from "../../services/auth-service";
 
 export default function Section() {
     const [formDisplay, setFormDisplay] = useState(false)
     const [userID, setUSerID] = useState('')
-    const [userAdded, toggleUser] = useState(false)
     const [details, toggleDetails] = useState(false)
+
+    const [users, setUSers] = useState([])
+
+    const addUser = (newUser) => {
+        setUSers(u => ({...u, newUser }))
+    }
+
+    useEffect(() => {
+        const fetchUsers = async () => {
+            try{
+                const data =  await authService.getAllUsers()
+                setUSers(data)
+            } catch(err){
+                console.log(err);
+            }
+            
+        }
+        fetchUsers()
+        
+    }, [])
+
     
 
     function userDetails(idUser){
@@ -30,9 +51,6 @@ export default function Section() {
         setFormDisplay(false)
     }
 
-    function toggleAddUser(){
-        toggleUser(u => !u)
-    }
 
     return (
         <>
@@ -42,8 +60,8 @@ export default function Section() {
 
                 <div className="table-wrapper">
                     {/* <!-- Overlap components  --> */}
-                    {formDisplay ? <CreateUser toggleAddUser={toggleAddUser} eventHandler={hideForm} /> : ''}
-                    <Table detailsHanler={userDetails} userAdded={userAdded} />
+                    {formDisplay ? <CreateUser  eventHandler={hideForm} /> : ''}
+                    <Table detailsHanler={userDetails}/>
                     
 
                     
