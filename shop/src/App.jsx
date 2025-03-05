@@ -1,12 +1,17 @@
-import Hero from "./Hero"
+import {  Routes, Route} from "react-router";
+import Headther from "./components/Headther";
+import Home from "./components/Home";
 
 function App() {
-
   return (
-    <>
-      <Hero />
-    </>
-  )
+    <div className="bg-white">
+      <Headther />
+
+      <Routes>
+          <Route path="/" element={<Home />} />
+      </Routes>
+    </div>
+  );
 }
 
-export default App
+export default App;

@@ -1,8 +1,9 @@
 import { useState } from "react";
+import { Link } from "react-router";
 
 const navigation = [
-    { name: "Product", href: "" },
-    { name: "Features", href: "#" },
+    { name: "Home", href: "/" },
+    { name: "Catalog", href: "/catalog" },
     { name: "Marketplace", href: "#" },
     { name: "Company", href: "#" },
 ];
@@ -38,13 +39,13 @@ export default function Headther(){
             </div>
             <div className="hidden lg:flex lg:gap-x-12">
                 {navigation.map((item) => (
-                    <a
+                    <Link
                         key={item.name}
-                        href={item.href}
+                        to={item.href}
                         className="text-sm/6 font-semibold text-gray-900"
                     >
                         {item.name}
-                    </a>
+                    </Link>
                 ))}
             </div>
             <div className="hidden lg:flex lg:flex-1 lg:justify-end">
