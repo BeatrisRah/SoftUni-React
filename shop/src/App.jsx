@@ -3,6 +3,7 @@ import Headther from "./components/Headther";
 import Home from "./components/Home";
 import Catalog from "./components/Catalog";
 import ProductsDetails from "./components/ProductDetails";
+import NotFound from "./components/NotFound";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/catalog" element={<Catalog />} />
           <Route path="/catalog/:productId" element={<ProductsDetails />} />
+          <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
   );
