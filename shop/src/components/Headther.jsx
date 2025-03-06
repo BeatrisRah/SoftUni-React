@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router";
+import Cart from "./Cart";
 
 const navigation = [
     { name: "Home", href: "/" },
@@ -11,6 +12,10 @@ const navigation = [
 
 export default function Headther(){
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const [open, setOpen] = useState(false);
+    
+
+
 
     return(
         <header className="absolute inset-x-0 top-0 z-50">
@@ -47,13 +52,18 @@ export default function Headther(){
                         {item.name}
                     </Link>
                 ))}
+                <button onClick={() => setOpen(true)} className="bg-indigo-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    Cart
+                </button>
+                
             </div>
+            
             <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-                <a href="#" className="text-sm/6 font-semibold text-gray-900">
-                    Log in <span aria-hidden="true">&rarr;</span>
-                </a>
+                
             </div>
+            
         </nav>
+        <Cart open={open} onClose={setOpen} />
         
     </header>
     )
