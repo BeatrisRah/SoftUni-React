@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 const chatsUrl = 'http://localhost:3030/jsonstore/messenger'
 
-export default function useFetcher(type, initialState = [] ){
+export default function useFetcher(type, initialState = []){
     const [state, setState] = useState(initialState)
     const [pending, setPending] = useState(true)
 
@@ -13,17 +13,22 @@ export default function useFetcher(type, initialState = [] ){
         case 'get':
             urlToFetch = chatsUrl;
             break;
+
     }
 
     useEffect(() => {
+        const controller = new AbortController()
+        options.signal = controller.signal;
         setPending(true)
-        fetch(urlToFetch, options)
+        fetch(urlToFetch, options )
         .then(res => res.json())
         .then(data => {
             setState(Object.values(data))
             setPending(false)
         })
-    }, [])
 
-    return [pending, state]
+        return () => controller.abort()
+    }, [type])
+
+    return [pending, state, setState]
 }
