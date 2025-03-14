@@ -1,22 +1,31 @@
 {
 	"-LxHVtajG3N1sU714pVj": {
 		"author": "Spami",
-		"content": "Hello, are you there?"
+		"content": "Hello, are you there?",
+		"id": "LxHVtajG3N1sU714pVj"
 	},
 	"-LxIDxC-GotWtf4eHwV8": {
 		"author": "Garry",
-		"content": "Yep, whats up :?"
+		"content": "Yep, whats up :?",
+		"id": "-LxIDxC-GotWtf4eHwV8"
+
 	},
 	"-LxIDxPfhsNipDrOQ5g_": {
 		"author": "Spami",
-		"content": "How are you? Long time no see? :)"
+		"content": "How are you? Long time no see? :)",
+		"id": "-LxIDxPfhsNipDrOQ5g_"
+
 	},
 	"-LxIE-dM_msaz1O9MouM": {
 		"author": "George",
-		"content": "Hello, guys! :))"
+		"content": "Hello, guys! :))",
+		"id": "-LxIE-dM_msaz1O9MouM"
+
 	},
 	"-LxLgX_nOIiuvbwmxt8w": {
 		"author": "Spami",
-		"content": "Hello, George nice to see you! :)))"
+		"content": "Hello, George nice to see you! :)))",
+		"id": "-LxLgX_nOIiuvbwmxt8w"
+
 	}
 }

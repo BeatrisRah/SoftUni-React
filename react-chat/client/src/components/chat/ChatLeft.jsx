@@ -1,4 +1,4 @@
-export default function ChatLeft() {
+export default function ChatLeft({data: {author, content}}) {
    return (
     <>
     <div className="flex items-center mb-2">
@@ -7,10 +7,10 @@ export default function ChatLeft() {
             src="https://picsum.photos/50/50"
             alt="User Avatar"
         />
-        <div className="font-medium">John Doe</div>
+        <div className="font-medium">{author}</div>
     </div>
     <div className="bg-white rounded-lg p-2 shadow mb-2 max-w-sm">
-        Hi, how can I help you?
+        {content}
     </div>
     </>
    );
