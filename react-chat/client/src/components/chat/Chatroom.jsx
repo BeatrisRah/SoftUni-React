@@ -2,12 +2,13 @@ import { useState } from "react";
 import useFetch from "../../hooks/useFetch";
 import ChatLeft from "./ChatLeft";
 import usePostFetch from "../../hooks/usePostFetch";
+import ErrorToast from "../ErrorToast";
 
 export default function Chatroom() {
 
     const [pending ,chats, setChats] = useFetch('get')
     const [val, setVal] = useState('')
-    const [formSubmit] = usePostFetch(setChats)
+    const [formSubmit, error] = usePostFetch(setChats)
    
 
     function updateInput(e){
@@ -17,6 +18,7 @@ export default function Chatroom() {
     
     return (
         <div className="h-screen flex flex-col">
+            {error && <ErrorToast error={error} />}
             <div className="bg-gray-200 flex-1 overflow-y-scroll">
                 <div className="px-4 py-2">
                     {pending && <span class="loader"></span>}
