@@ -1,7 +1,11 @@
+import { useContext } from "react";
 import { Link } from "react-router";
+import { useUser } from "../context/UserContext";
 
 export default function Navigation() {
-   return (
+    const {user} = useUser()
+
+    return (
     <nav className="flex p-7" aria-label="Breadcrumb">
         <ol className="inline-flex items-center space-x-1 md:space-x-3">
         <li className="inline-flex items-center">
@@ -25,9 +29,14 @@ export default function Navigation() {
         <li aria-current="page">
             <div className="flex items-center">
             <span className="mx-2.5 text-gray-800 ">/</span>
-            <span className="ml-1 text-sm font-medium text-gray-800 hover:underline md:ml-2">
-                Replication
-            </span>
+            {user ? 
+            <Link to={'/logout'} className="ml-1 text-sm font-medium text-gray-800 hover:underline md:ml-2">
+                Logout
+            </Link>:
+            <Link to={'/login'} className="ml-1 text-sm font-medium text-gray-800 hover:underline md:ml-2">
+                Login
+            </Link>}
+            
             </div>
         </li>
         </ol>
