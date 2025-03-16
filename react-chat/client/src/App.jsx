@@ -4,6 +4,7 @@ import Chatroom from "./components/chat/Chatroom"
 import Navigation from "./components/Navigation"
 import { useState } from "react"
 import { UserContext } from "./context/UserContext"
+import Login from "./pages/Login"
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
 				<Routes>
 					<Route path="/" element={<Home />} />
 					<Route path="/chat" element={<Chatroom />} />
+					<Route path="/login" element={<Login />} />
 				</Routes>
 			</UserContext.Provider>
 		</>
