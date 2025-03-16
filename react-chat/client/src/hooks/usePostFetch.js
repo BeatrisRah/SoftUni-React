@@ -7,7 +7,7 @@ const chatsUrl = 'http://localhost:3030/jsonstore/messenger'
 
 export default function usePostFetch(defaultValuesSeter){
     const {user, login, logout} = useUser()
-    const [val, setVal] = useState({content:'', user,})
+    const [val, setVal] = useState({content:null, author:user})
     const [error, setError] = useState(null)
 
 
@@ -18,6 +18,7 @@ export default function usePostFetch(defaultValuesSeter){
 
     }
     useEffect(() => {
+        if(!val.content) return
         if(val.content === '' ) {
             setError('Please type a message')
             return
@@ -40,7 +41,7 @@ export default function usePostFetch(defaultValuesSeter){
         })
         .then(res => res.json())
         .then(data => defaultValuesSeter(c => ([...c, data])))
-    }, [val])
+    }, [val.content])
 
     return [formSubmiter, error]
 
