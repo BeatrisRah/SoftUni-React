@@ -2,6 +2,7 @@ import { Box } from "@mui/material"
 import SpeedDialNav from "./components/SpeedDial"
 import { blueGrey } from "@mui/material/colors"
 import Headers from "./components/Headers"
+import NotesSection from "./components/NotesSection"
 
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
       
       <SpeedDialNav />
       <Headers />
+      <NotesSection />
 
       </Box>
     </>
