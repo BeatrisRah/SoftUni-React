@@ -4,7 +4,7 @@ import SpeedDialAction from '@mui/material/SpeedDialAction';
 import AddIcon from '@mui/icons-material/Add';
 
 const actions = [
-    { icon: <AddIcon /> , name: 'Copy' },
+    { icon: <AddIcon /> , name: 'Add' },
 ];
 
 export default function SpeedDialNav() {

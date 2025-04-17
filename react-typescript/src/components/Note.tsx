@@ -22,19 +22,29 @@ export default function NoteItem({ title, content }: Note) {
                 </Typography>
 
                 {isArray ? (
-                    <List dense>
-                        {content.map((item, index) => (
-                            <ListItem key={index} disablePadding>
-                                <ListItemText primary={`• ${item}`} sx={{ pl: 1 }} />
-                            </ListItem>
-                        ))}
-                    </List>
+                    <NoteList content={content} />
                 ) : (
-                    <Typography variant="body2">
-                        {content}
-                    </Typography>
+                    <Typography variant="body2">{content}</Typography>
                 )}
             </CardContent>
         </Card>
     );
 }
+
+type NoteListProps = {
+    content: string[];
+};
+
+const NoteList = ({ content }: NoteListProps) => {
+    return (
+        <List dense>
+            {content.map((item, index) => (
+                <ListItem
+                    key={index}
+                >
+                    <ListItemText primary={item} />
+                </ListItem>
+            ))}
+        </List>
+    );
+};
