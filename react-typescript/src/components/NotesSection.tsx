@@ -1,9 +1,6 @@
-import { Box, Card, Typography } from "@mui/material"
-
-type Note = {
-    title: string,
-    content: string | string[]
-}
+import { Box } from "@mui/material"
+import { Note } from '../types/types'
+import NoteItem from "./Note"
 
 export default function NotesSection(){
     const noteList: Note[] = [
@@ -13,11 +10,7 @@ export default function NotesSection(){
     return(
         <Box sx={{width:'75%', p:2}} >
             {noteList.map(n => (
-                <Card key={n.title} sx={{width:'25%'}} variant="outlined">
-                    <Typography gutterBottom sx={{ color: 'text.secondary', fontSize: 14 }}>
-                        {n.title}
-                    </Typography>
-                </Card>
+                <NoteItem {...n} />
             ))}
         </Box>
     )
