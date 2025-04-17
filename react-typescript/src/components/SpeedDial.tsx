@@ -2,9 +2,11 @@ import SpeedDial from '@mui/material/SpeedDial';
 import SpeedDialIcon from '@mui/material/SpeedDialIcon';
 import SpeedDialAction from '@mui/material/SpeedDialAction';
 import AddIcon from '@mui/icons-material/Add';
+import FormatListBulletedAddIcon from '@mui/icons-material/FormatListBulletedAdd';
 
 const actions = [
     { icon: <AddIcon /> , name: 'Add' },
+    { icon: <FormatListBulletedAddIcon /> , name: 'List' }
 ];
 
 export default function SpeedDialNav() {

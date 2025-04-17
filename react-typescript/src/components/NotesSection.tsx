@@ -1,13 +1,11 @@
 import { Box } from "@mui/material"
-import { Note } from '../types/types'
 import NoteItem from "./Note"
-import { useState } from "react"
+import { useNoteContext } from "../context/NoteContext"
 
 export default function NotesSection(){
-    const [noteList, setNoteList] = useState<Note[]>([
-        {title:'Fruit List', content:['Apples', 'Watermelon']}
-    ])
+    const { getAll } = useNoteContext()
 
+    const noteList = getAll()
 
     return(
         <Box sx={{width:'75%', p:2}} >
