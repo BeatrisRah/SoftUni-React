@@ -6,6 +6,8 @@ import {
     Button,
   } from '@mui/material';
 import { useState } from 'react';
+import { useNoteContext } from '../context/NoteContext';
+import { Note } from '../types/types';
 
 type CreateModalProps = {
     noteModal: boolean, 
@@ -16,9 +18,14 @@ type CreateModalProps = {
 export default function CreateMOdal({noteModal, handleClose , modalType} : CreateModalProps) {
   const [noteText, setNoteText] = useState<string>('');
   const [checkList, setCheckList] = useState<string[]>(['']);
+  const [noteTitle, setNoteTitle] = useState<string>('');
+  const {add} = useNoteContext()
     
     const handleSave = () => {
-
+      if(modalType === 'Add'){
+        const newNote: Note = { title: noteTitle, content: noteText };
+      }
+      setNoteTitle('');
     }
 
     const updateCheckList = (index: number, value: string) => {
@@ -39,7 +46,12 @@ export default function CreateMOdal({noteModal, handleClose , modalType} : Creat
 
     
     return (
-      <Modal open={noteModal} onClose={handleClose}>
+      <Modal open={noteModal} onClose={() => {
+        handleClose()
+        setNoteTitle('');
+        setNoteText('');
+        setCheckList(['']);
+      }}>
       <Box
         sx={{
           position: 'absolute',
@@ -57,6 +69,19 @@ export default function CreateMOdal({noteModal, handleClose , modalType} : Creat
         <Typography variant="h6" mb={2}>
           {modalType === 'Add' ? 'Add a Note' : 'Add a Checklist'}
         </Typography>
+        <TextField
+        fullWidth
+        variant="outlined"
+        label="Note title"
+        value={noteTitle}
+        onChange={(e) => setNoteTitle(e.target.value)}
+        sx={{
+          mb: 2,
+          '& .MuiInputBase-input': { color: 'white' },
+          '& .MuiInputLabel-root': { color: 'grey.400' },
+          '& .MuiOutlinedInput-notchedOutline': { borderColor: 'grey.700' },
+        }}
+      />
 
         {modalType === 'Add' ? (
           <TextField
@@ -67,7 +92,7 @@ export default function CreateMOdal({noteModal, handleClose , modalType} : Creat
             label="Note content"
             value={noteText}
             onChange={(e) => setNoteText(e.target.value)}
-            sx={{ mb: 2, input: { color: 'white' }, label: { color: 'grey.400' } }}
+            sx={{ mb: 2,'& .MuiInputBase-input': { color: 'white' }, label: { color: 'grey.400' } }}
           />
         ) : (
           <Box display="flex" flexDirection="column" gap={1} mb={2}>
