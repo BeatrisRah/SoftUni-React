@@ -8,7 +8,7 @@ export default function NotesSection(){
     const noteList = getAll()
 
     return(
-        <Box sx={{width:'75%', p:2}} >
+        <Box sx={{width:'75%', p:2, display:'flex', flexWrap:'wrap'}} >
             {noteList.map(n => (
                 <NoteItem {...n} />
             ))}

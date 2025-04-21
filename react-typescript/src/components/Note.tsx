@@ -1,6 +1,5 @@
 import { Note } from '../types/types'
-import { Card, CardContent, Typography, List, ListItem, ListItemText } from '@mui/material';
-
+import { Card, CardContent, Typography, List, ListItem, ListItemText, ListItemButton, ListItemIcon, Checkbox } from '@mui/material';
 
 export default function NoteItem({ title, content }: Note) {
     const isArray = Array.isArray(content);
@@ -12,7 +11,7 @@ export default function NoteItem({ title, content }: Note) {
                 color: 'grey.100',
                 borderRadius: 2,
                 boxShadow: 3,
-                maxWidth: 400,
+                width: 400,
                 m: 2,
             }}
         >
@@ -41,8 +40,32 @@ const NoteList = ({ content }: NoteListProps) => {
             {content.map((item, index) => (
                 <ListItem
                     key={index}
+                    disablePadding
+                    sx={{ alignItems: 'center' }}
                 >
-                    <ListItemText primary={item} />
+                    <ListItemButton
+                        role={undefined}
+                        dense
+                        sx={{ py: 0.5, px: 1 }} 
+                    >
+                        <ListItemIcon sx={{ minWidth: 32, color: 'white' }}>
+                            <Checkbox
+                                edge="start"
+                                tabIndex={-1}
+                                disableRipple
+                                sx={{
+                                    color: 'white',
+                                    '&.Mui-checked': {
+                                        color: 'white',
+                                    },
+                                }}
+                            />
+                        </ListItemIcon>
+                        <ListItemText
+                            primary={item}
+                            primaryTypographyProps={{ sx: { color: 'white' } }}
+                        />
+                    </ListItemButton>
                 </ListItem>
             ))}
         </List>

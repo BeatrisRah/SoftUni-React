@@ -157,7 +157,6 @@ export default function CreateModal({ noteModal, handleClose, modalType }: Creat
           </Box>
         )}
 
-        {/* Actions */}
         <Box display="flex" justifyContent="flex-end" gap={1}>
           <Button variant="text" onClick={handleCancel} sx={{ color: 'grey.400' }}>
             Cancel
