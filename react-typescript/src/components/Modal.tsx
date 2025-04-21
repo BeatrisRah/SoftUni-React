@@ -1,57 +1,80 @@
-import {
-    Modal,
-    Box,
-    Typography,
-    TextField,
-    Button,
-  } from '@mui/material';
-import { useState } from 'react';
+import { useReducer } from 'react';
+import { Modal, Box, Typography, TextField, Button } from '@mui/material';
 import { useNoteContext } from '../context/NoteContext';
-import { Note } from '../types/types';
 
 type CreateModalProps = {
-    noteModal: boolean, 
-    modalType: 'Add' | 'List' | null,
-    handleClose: () => void
-}
+  noteModal: boolean;
+  handleClose: () => void;
+  modalType: 'Add' | 'List' | null;
+};
 
-export default function CreateMOdal({noteModal, handleClose , modalType} : CreateModalProps) {
-  const [noteText, setNoteText] = useState<string>('');
-  const [checkList, setCheckList] = useState<string[]>(['']);
-  const [noteTitle, setNoteTitle] = useState<string>('');
-  const {add} = useNoteContext()
-    
-    const handleSave = () => {
-      if(modalType === 'Add'){
-        const newNote: Note = { title: noteTitle, content: noteText };
-      }
-      setNoteTitle('');
+type NoteFormState = {
+  title: string;
+  text: string;
+  checklist: string[];
+};
+
+const initialState: NoteFormState = {
+  title: '',
+  text: '',
+  checklist: [''],
+};
+
+type Action =
+  | { type: 'SET_TITLE'; payload: string }
+  | { type: 'SET_TEXT'; payload: string }
+  | { type: 'SET_CHECKLIST_ITEM'; index: number; value: string }
+  | { type: 'ADD_CHECKLIST_ITEM' }
+  | { type: 'REMOVE_CHECKLIST_ITEM'; index: number }
+  | { type: 'RESET' };
+
+const reducer = (state: NoteFormState, action: Action): NoteFormState => {
+  switch (action.type) {
+    case 'SET_TITLE':
+      return { ...state, title: action.payload };
+    case 'SET_TEXT':
+      return { ...state, text: action.payload };
+    case 'SET_CHECKLIST_ITEM':{
+      const updated = [...state.checklist];
+      updated[action.index] = action.value;
+      return { ...state, checklist: updated };
+    }
+    case 'ADD_CHECKLIST_ITEM':
+      return { ...state, checklist: [...state.checklist, ''] };
+    case 'REMOVE_CHECKLIST_ITEM':
+      return { ...state, checklist: state.checklist.filter((_, i) => i !== action.index) };
+    case 'RESET':
+      return initialState;
+    default:
+      return state;
+  }
+};
+
+export default function CreateModal({ noteModal, handleClose, modalType }: CreateModalProps) {
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const { add } = useNoteContext();
+
+  const handleSave = () => {
+    if (!state.title.trim()) return;
+
+    if (modalType === 'Add') {
+      add({ title: state.title, content: state.text });
+    } else {
+      const cleaned = state.checklist.filter((item) => item.trim() !== '');
+      add({ title: state.title, content: cleaned });
     }
 
-    const updateCheckList = (index: number, value: string) => {
-      const updated = [...checkList];
-      updated[index] = value;
-      setCheckList(updated);
-    };
-  
-    const addCheckItem = () => {
-      setCheckList([...checkList, '']);
-    };
-  
-    const removeCheckItem = (index: number) => {
-      const updated = [...checkList];
-      updated.splice(index, 1);
-      setCheckList(updated);
-    };
+    dispatch({ type: 'RESET' });
+    handleClose();
+  };
 
-    
-    return (
-      <Modal open={noteModal} onClose={() => {
-        handleClose()
-        setNoteTitle('');
-        setNoteText('');
-        setCheckList(['']);
-      }}>
+  const handleCancel = () => {
+    dispatch({ type: 'RESET' });
+    handleClose();
+  };
+
+  return (
+    <Modal open={noteModal} onClose={handleCancel}>
       <Box
         sx={{
           position: 'absolute',
@@ -69,20 +92,23 @@ export default function CreateMOdal({noteModal, handleClose , modalType} : Creat
         <Typography variant="h6" mb={2}>
           {modalType === 'Add' ? 'Add a Note' : 'Add a Checklist'}
         </Typography>
-        <TextField
-        fullWidth
-        variant="outlined"
-        label="Note title"
-        value={noteTitle}
-        onChange={(e) => setNoteTitle(e.target.value)}
-        sx={{
-          mb: 2,
-          '& .MuiInputBase-input': { color: 'white' },
-          '& .MuiInputLabel-root': { color: 'grey.400' },
-          '& .MuiOutlinedInput-notchedOutline': { borderColor: 'grey.700' },
-        }}
-      />
 
+        {/* Note Title */}
+        <TextField
+          fullWidth
+          variant="outlined"
+          label="Note title"
+          value={state.title}
+          onChange={(e) => dispatch({ type: 'SET_TITLE', payload: e.target.value })}
+          sx={{
+            mb: 2,
+            '& .MuiInputBase-input': { color: 'white' },
+            '& .MuiInputLabel-root': { color: 'grey.400' },
+            '& .MuiOutlinedInput-notchedOutline': { borderColor: 'grey.700' },
+          }}
+        />
+
+        {/* Note Content or Checklist */}
         {modalType === 'Add' ? (
           <TextField
             fullWidth
@@ -90,43 +116,50 @@ export default function CreateMOdal({noteModal, handleClose , modalType} : Creat
             minRows={3}
             variant="outlined"
             label="Note content"
-            value={noteText}
-            onChange={(e) => setNoteText(e.target.value)}
-            sx={{ mb: 2,'& .MuiInputBase-input': { color: 'white' }, label: { color: 'grey.400' } }}
+            value={state.text}
+            onChange={(e) => dispatch({ type: 'SET_TEXT', payload: e.target.value })}
+            sx={{
+              mb: 2,
+              '& .MuiInputBase-input': { color: 'white' },
+              '& .MuiInputLabel-root': { color: 'grey.400' },
+            }}
           />
         ) : (
           <Box display="flex" flexDirection="column" gap={1} mb={2}>
-            {checkList.map((item, index) => (
+            {state.checklist.map((item, index) => (
               <Box key={index} display="flex" alignItems="center" gap={1}>
                 <TextField
                   fullWidth
                   variant="outlined"
                   label={`Item ${index + 1}`}
                   value={item}
-                  onChange={(e) => updateCheckList(index, e.target.value)}
+                  onChange={(e) =>
+                    dispatch({ type: 'SET_CHECKLIST_ITEM', index, value: e.target.value })
+                  }
                   sx={{ input: { color: 'white' }, label: { color: 'grey.400' } }}
                 />
-                <Button variant="text" onClick={() => removeCheckItem(index)} sx={{ color: 'red' }}>
+                <Button
+                  variant="text"
+                  onClick={() => dispatch({ type: 'REMOVE_CHECKLIST_ITEM', index })}
+                  sx={{ color: 'red' }}
+                >
                   ✕
                 </Button>
               </Box>
             ))}
-            <Button variant="outlined" onClick={addCheckItem} sx={{ color: 'white', borderColor: 'grey.600' }}>
+            <Button
+              variant="outlined"
+              onClick={() => dispatch({ type: 'ADD_CHECKLIST_ITEM' })}
+              sx={{ color: 'white', borderColor: 'grey.600' }}
+            >
               + Add Item
             </Button>
           </Box>
         )}
 
+        {/* Actions */}
         <Box display="flex" justifyContent="flex-end" gap={1}>
-          <Button
-            variant="text"
-            onClick={() => {
-              handleClose();
-              setNoteText('');
-              setCheckList(['']);
-            }}
-            sx={{ color: 'grey.400' }}
-          >
+          <Button variant="text" onClick={handleCancel} sx={{ color: 'grey.400' }}>
             Cancel
           </Button>
           <Button variant="contained" onClick={handleSave}>
@@ -135,5 +168,5 @@ export default function CreateMOdal({noteModal, handleClose , modalType} : Creat
         </Box>
       </Box>
     </Modal>
-    );
+  );
 }
