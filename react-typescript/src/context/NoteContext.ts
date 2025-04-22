@@ -4,7 +4,8 @@ import { Note } from "../types/types";
 
 type noteContextType = {
     getAll: () => Note[],
-    add: (newNote: Note) => void
+    add: (newNote: Note) => void,
+    remove: (title: string) => void
 }
 
 const NoteContext = createContext<noteContextType | null>(null)

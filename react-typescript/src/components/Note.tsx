@@ -1,32 +1,52 @@
 import { Note } from '../types/types'
 import { Card, CardContent, Typography, List, ListItem, ListItemText, ListItemButton, ListItemIcon, Checkbox } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
+import { useNoteContext } from '../context/NoteContext';
+
 
 export default function NoteItem({ title, content }: Note) {
     const isArray = Array.isArray(content);
+    const {remove} = useNoteContext()
 
     return (
         <Card
+    sx={{
+        position: 'relative',
+        backgroundColor: 'grey.900',
+        color: 'grey.100',
+        borderRadius: 2,
+        boxShadow: 3,
+        width: 400,
+        m: 2,
+    }}
+>
+        <IconButton
+            aria-label="delete"
+            size="small"
+            onClick={() => remove(title)}
             sx={{
-                backgroundColor: 'grey.900',
+                position: 'absolute',
+                top: 8,
+                right: 8,
                 color: 'grey.100',
-                borderRadius: 2,
-                boxShadow: 3,
-                width: 400,
-                m: 2,
             }}
         >
-            <CardContent>
-                <Typography variant="h6" gutterBottom>
-                    {title}
-                </Typography>
+            <CloseIcon fontSize="small" />
+        </IconButton>
 
-                {isArray ? (
-                    <NoteList content={content} />
-                ) : (
-                    <Typography variant="body2">{content}</Typography>
-                )}
-            </CardContent>
-        </Card>
+        <CardContent>
+            <Typography variant="h6" gutterBottom>
+                {title}
+            </Typography>
+
+            {isArray ? (
+                <NoteList content={content} />
+            ) : (
+                <Typography variant="body2">{content}</Typography>
+            )}
+        </CardContent>
+    </Card>
     );
 }
 

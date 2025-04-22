@@ -21,10 +21,14 @@ function App() {
     setNoteList(prev => [...prev, newNote])
   }
 
+  const remove = (title: string):void => {
+    setNoteList(prevList => prevList.filter(note => note.title !== title));
+  }
+
 
   return (
     <>
-    <NoteContext.Provider value={{getAll, add}} >
+    <NoteContext.Provider value={{getAll, add, remove}} >
         <Box sx={{
           backgroundColor: '#121212',
           width:'100%',
